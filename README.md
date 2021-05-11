@@ -48,12 +48,12 @@ That's it! You can find more info on the Climdex indices [here](https://climdex.
 
 **Precipitation**
 
-- Monthly 1-day precip (Rx1day)
-- Monthly 5-day precip (Rx5day)
-- Annual 10mm precip days
-- Annual 20mm precip days
-- Annual n mm precip days
-- Total precipitation (variable time period)
+- Monthly and annual 1-day precip (Rx1day)
+- Monthly and annual 5-day precip (Rx5day)
+- Annual 10mm precip days (R10MM)
+- Annual 20mm precip days (R20MM)
+- Annual n mm precip days (RNNMM)
+- Total precipitation (variable time period) (PRCPTOT)
 - Simple intensity index (SDII)
 - Consecutive dry days (CDD)
 - Consecutive wet days (CWD)

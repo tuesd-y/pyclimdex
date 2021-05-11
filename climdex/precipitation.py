@@ -11,21 +11,21 @@ class PrecipitationIndices:
         self.time_dim = time_dim
         self.convert_units_fn = convert_units_fn
         
-    def monthly_rx1day(self, X: Union[xr.DataArray, xr.Dataset], varname='PRCP'):
+    def rx1day(self, X: Union[xr.DataArray, xr.Dataset], period='1M', varname='PRCP'):
         """
-        Monthly maximum 1-day precipitation
+        Maximum 1-day precipitation over 'period' (default: monthly) (1M or 1y)
         """
         X_arr = utils.data_array_or_dataset_var(X, var=varname)
         X_arr = utils.resample_daily(X_arr, lambda x: x.sum(), time_dim=self.time_dim)
-        return X_arr.resample({self.time_dim: '1M'}).max()
+        return X_arr.resample({self.time_dim: period}).max()
         
-    def monthly_rx5day(self, X: Union[xr.DataArray, xr.Dataset], varname='PRCP'):
+    def rx5day(self, X: Union[xr.DataArray, xr.Dataset], period='1M', varname='PRCP'):
         """
-        Monthly maximum 5-day precipitation
+        Maximum 5-day precipitation over 'period' (default: monthly) (1M or 1y)
         """
         X_arr = utils.data_array_or_dataset_var(X, var=varname)
         X_arr = utils.resample_daily(X_arr, lambda x: x.sum(), time_dim=self.time_dim)
-        return X_arr.rolling({self.time_dim: 5}, min_periods=1, center=True).sum().resample({self.time_dim: '1M'}).max()
+        return X_arr.rolling({self.time_dim: 5}, min_periods=1, center=True).sum().resample({self.time_dim: period}).max()
     
     def annual_rnmm(self, X: Union[xr.DataArray, xr.Dataset], nmm, varname='PRCP'):
         """
