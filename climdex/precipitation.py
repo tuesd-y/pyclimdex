@@ -49,13 +49,15 @@ class PrecipitationIndices:
         """
         return self.annual_rnmm(X, self.convert_units_fn(20.0), varname=varname)
     
-    def prcptot(self, X: Union[xr.DataArray, xr.Dataset], period='1y', varname='PRCP'):
+    def prcptot(self, X: Union[xr.DataArray, xr.Dataset], period='1y', wet_day_threshold=0, varname='PRCP'):
         """
         Total precipitation over 'period' (default: annual)
+        wet_day_threshold: amount in mm for the day to be considered (default: 0, recommended: 1)
         """
         X_arr = utils.data_array_or_dataset_var(X, var=varname)
         X_arr = utils.resample_daily(X_arr, lambda x: x.sum(), time_dim=self.time_dim)
-        return X_arr.resample({self.time_dim: period}).sum()
+        X_arr = X_arr.where(X_arr >= wet_day_threshold)
+        return X_arr.resample({self.time_dim: period}).sum(skipna=True)
     
     def sdii(self, X: Union[xr.DataArray, xr.Dataset], period='1M', varname='PRCP'):
         """
