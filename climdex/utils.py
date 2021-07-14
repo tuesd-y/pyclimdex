@@ -32,7 +32,8 @@ def resample_daily(X: xr.DataArray,
     if interval == NS_PER_DAY:
         return X
     if interval > NS_PER_DAY:
-        raise ValueError('resample_daily expects input data with daily resolution or higher')
+        #raise ValueError('resample_daily expects input data with daily resolution or higher')
+        return X
     # resample X to daily
     X_resample = X.resample({time_dim: '1D'})
     return resample_op(X_resample)
